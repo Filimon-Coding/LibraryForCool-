@@ -26,10 +26,44 @@ document.addEventListener("DOMContentLoaded", ()=>{
         const email = emailIn.value.trim();
 
 
-        if (firstName === ""){
-            message.textContent = "First name is empty"
+        if (firstName === "" || lastName === "" || dob === "" || phone === "" || email === ""){
+            message.textContent = "You need to fil all the fields"
             message.style.color = "Red"
+            return false;
         }
+
+
+        const phoneRegx = /^[0-9]{8}$/;
+
+        if(!phoneRegx.test(phone)){
+            message.textContent = "Phone is not correct input"
+            message.style.color = "Red"
+            return false;
+        }
+
+
+
+        const emailRegx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(!emailRegx.test(email)){
+            message.textContent = "Email is not correct input"
+            message.style.color = "Red"
+            return false;
+        }
+
+
+        const dateToday = new date();
+
+        const currentAge = dateToday - dob;
+
+        if (currentAge < 18){
+            message.textContent = "You are under the age of 18, so you cant apply here"
+            message.style.color = "purple"
+            return false;
+
+        }
+
+
+
 
 
 
