@@ -11,28 +11,26 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const submitbutton = document.getElementById("submitID")
 
     // const submitIn = document.getElementById("submitID");
-    message.textContent = "Nothing sent yett";
+    message.textContent = "Nothing sent yet";
     message.style.color = "Blue";
 
 
 
-
+// Simple validation for alle the inputs
     function validationInput(){
 
         const firstName = firstNameIn.value.trim();
         const lastName = lastNameIn.value.trim();
-        const dob = dobIn.value.trim();
+        const dobStr = dobIn.value.trim();
         const phone = phoneIn.value.trim();
         const email = emailIn.value.trim();
 
 
-        if (firstName === "" || lastName === "" || dob === "" || phone === "" || email === ""){
+        if (firstName === "" || lastName === "" || dobStr === "" || phone === "" || email === ""){
             message.textContent = "You need to fil all the fields"
             message.style.color = "Red"
             return false;
         }
-
-
         const phoneRegx = /^[0-9]{8}$/;
 
         if(!phoneRegx.test(phone)){
@@ -40,10 +38,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
             message.style.color = "Red"
             return false;
         }
-
-
-
         const emailRegx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
         if(!emailRegx.test(email)){
             message.textContent = "Email is not correct input"
             message.style.color = "Red"
@@ -51,26 +47,95 @@ document.addEventListener("DOMContentLoaded", ()=>{
         }
 
 
-        const dateToday = new date();
 
-        const currentAge = dateToday - dob;
 
-        if (currentAge < 18){
-            message.textContent = "You are under the age of 18, so you cant apply here"
-            message.style.color = "purple"
+
+
+        const dob = new Date(dobStr);
+        if (isNaN(dob.getTime())) {
+            message.textContent = "Invalid date format";
+            message.style.color = "red";
             return false;
-
         }
 
+        // Check age
+        const today = new Date();
+        const ageDiffMs = today - dob;
+        const ageDate = new Date(ageDiffMs);
+        const currentAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+
+        if (currentAge < 18) {
+            message.textContent = "You are under the age of 18, so you can't apply here.";
+            message.style.color = "purple";
+            return false;
+        }
+
+        // If all checks pass
+        message.textContent = "Everything is correct and sent to the backend";
+        message.style.color = "green";
+        return true;
 
 
 
-
-
+        // Now for Object to show for Alert and later on to send to Endpoint on backend
 
     }
 
-    submitbutton.addEventListener("click",validationInput )
+        // Now for Object to show for Alert and later on to send to Endpoint on backend
+
+    function sendToBackEnd (){
+
+        if(!validationInput()){
+            console.log("No vaild input so no need to send to the backend")
+            return false;
+        }else {
+            message.textContent = "Everything is correct og sent to the backend ";
+            message.style.color = "Green";
+        }
+
+
+        const firstName = firstNameIn.value.trim();
+        const lastName = lastNameIn.value.trim();
+        const dob = dobIn.value.trim();
+        const phone = phoneIn.value.trim();
+        const email = emailIn.value.trim();
+// Objekt of the user gi
+        const person = {
+            firstName: firstName,
+            lastName: lastName,
+            dob:dob,
+            phone:phone,
+            email:email
+        };
+        console.log(person);
+        alert(JSON.stringify(person, null, 2 ));
+
+
+// To send user data to backend
+        $.ajax({
+            url: "/saveUser",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(person),
+            success: function (response){
+                console.log("Sendt to the backend", response)
+            }, error: function (error) {
+                console.log("Something went wrong on transfere ", error)
+            }
+
+        })
+
+    }
+
+
+
+
+
+
+
+
+    // submitbutton.addEventListener("click",validationInput);
+    submitbutton.addEventListener("click",sendToBackEnd);
 
 
 
