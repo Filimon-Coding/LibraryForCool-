@@ -2,6 +2,7 @@ package com.example.eksam2024minv.controller;
 
 import java.util.ArrayList;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,9 +26,14 @@ public class BooksController {
 
     
     @GetMapping("/all")
-    public ArrayList<Books> getAllBooks(){
+    public ResponseEntity<ArrayList<Books>> getAllBooks() {
+        ArrayList<Books> books = booksService.findAllBooks();
 
-        return booksService.findAllBooks();
+        if (books.isEmpty()) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        }
 
+        return ResponseEntity.ok(books); // 200 OK with list of books
     }
+
 }
