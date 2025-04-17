@@ -128,6 +128,20 @@ document.addEventListener("DOMContentLoaded", ()=>{
     }
 
 
+    function getBookFromBackend(){
+
+        $.ajax({
+            url: "books/all",
+            method: "GET",
+            success: function (bookList) {
+                allBooks = bookList;
+            }
+
+
+        })
+    }
+
+
 
 
 
