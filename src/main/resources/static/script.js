@@ -135,6 +135,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
             method: "GET",
             success: function (bookList) {
                 allBooks = bookList;
+
+
             }
 
 
