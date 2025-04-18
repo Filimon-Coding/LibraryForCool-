@@ -40,4 +40,8 @@ public class Book {
 
     public double getRating() { return rating; }
     public void setRating(double rating) { this.rating = rating; }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

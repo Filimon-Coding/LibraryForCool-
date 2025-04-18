@@ -30,9 +30,10 @@ public class BookController {
 
     @PutMapping("/books/{id}")
     public Book update(@PathVariable Integer id, @RequestBody Book book) {
-     //   book.setId(id);
+       book.setId(id);
         return repo.save(book);
     }
+
 
     @DeleteMapping("/books/{id}")
     public void delete(@PathVariable Integer id) {

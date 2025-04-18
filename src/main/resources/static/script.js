@@ -129,33 +129,25 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 
     function getBookFromBackend(){
-
-
-        fetch("/books")
-            .then(r => r.json())
-            .then(data => {
+        $.ajax({
+            url: "/books",            // Endepunktet i Spring Boot
+            method: "GET",            // GET-metode brukes for å hente data
+            success: function (books) {
+                // Finner <ul> elementet der bøkene skal vises
                 const ul = document.getElementById("list");
-                data.forEach(b => {
+                ul.innerHTML = "";    // Tømmer tidligere innhold
+
+                // Går gjennom hver bok og legger til som <li>
+                books.forEach(function (book) {
                     const li = document.createElement("li");
-                    li.textContent = `${b.title} (${b.publicationYear}) – ${b.author}`;
+                    li.textContent = `${book.title} (${book.publicationYear}) – ${book.author}`;
                     ul.appendChild(li);
                 });
-            });
-
-        /*
-                $.ajax({
-                    url: "books/all",
-                    method: "GET",
-                    success: function (bookList) {
-                        allBooks = bookList;
-
-
-                    }
-
-
-                })
-
-         */
+            },
+            error: function (xhr, status, error) {
+                console.error("Klarte ikke å hente bøker:", error);
+            }
+        });
     }
 
 
