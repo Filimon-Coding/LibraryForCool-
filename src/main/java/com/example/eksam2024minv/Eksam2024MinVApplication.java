@@ -9,5 +9,4 @@ public class Eksam2024MinVApplication {
     public static void main(String[] args) {
         SpringApplication.run(Eksam2024MinVApplication.class, args);
     }
-
 }

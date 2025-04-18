@@ -130,17 +130,32 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     function getBookFromBackend(){
 
-        $.ajax({
-            url: "books/all",
-            method: "GET",
-            success: function (bookList) {
-                allBooks = bookList;
+
+        fetch("/books")
+            .then(r => r.json())
+            .then(data => {
+                const ul = document.getElementById("list");
+                data.forEach(b => {
+                    const li = document.createElement("li");
+                    li.textContent = `${b.title} (${b.publicationYear}) – ${b.author}`;
+                    ul.appendChild(li);
+                });
+            });
+
+        /*
+                $.ajax({
+                    url: "books/all",
+                    method: "GET",
+                    success: function (bookList) {
+                        allBooks = bookList;
 
 
-            }
+                    }
 
 
-        })
+                })
+
+         */
     }
 
 
@@ -151,7 +166,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 
     // submitbutton.addEventListener("click",validationInput);
-    submitbutton.addEventListener("click",sendToBackEnd);
+    // submitbutton.addEventListener("click",sendToBackEnd);
+    submitbutton.addEventListener("click",getBookFromBackend);
 
 
 

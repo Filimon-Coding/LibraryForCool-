@@ -1,3 +1,4 @@
+/*
 CREATE TABLE IF NOT EXISTS books (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
@@ -12,3 +13,5 @@ INSERT INTO books (name, author, yearRelease, rating) VALUES
 ('Pride and Prejudice', 'Jane Austen', 1813, 4.3),
 ('Animal Farm', 'George Orwell', 1951, 4.1),
 ('The Lord of the Rings', 'J.R.R. Tolkien', 1954, 4.6);
+
+ */
