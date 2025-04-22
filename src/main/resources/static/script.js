@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     const emailIn = document.getElementById("emailID");
     const message = document.getElementById("messageID");
     const submitbutton = document.getElementById("submitID")
+    const viewButton = document.getElementById("viewButtonID");
 
     // const submitIn = document.getElementById("submitID");
     message.textContent = "Nothing sent yet";
@@ -159,7 +160,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
     // submitbutton.addEventListener("click",validationInput);
     // submitbutton.addEventListener("click",sendToBackEnd);
-    submitbutton.addEventListener("click",getBookFromBackend);
+    submitbutton.addEventListener("click",sendToBackEnd);
+    viewButton.addEventListener("click", getBookFromBackend);
+
 
 
 
